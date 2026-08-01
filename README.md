@@ -1,12 +1,6 @@
-# My Hyprland Dotfiles
+# Actual Minimal Monochrome Hyprland 
 
-A minimal Hyprland setup built on CachyOS.
-
----
-
-## Screenshot
-
-![Desktop](images/desktop.png)
+A minimal Hyprland setup built on Monochrome, which is actually minimal not unixporn shit, created from raw hyprland so zero Bloatware :)
 
 ---
 
