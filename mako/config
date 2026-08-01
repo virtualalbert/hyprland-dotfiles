@@ -1,0 +1,32 @@
+# ~/.config/mako/config
+#
+# Same palette as waybar/wofi/hyprlock/kitty — deep green-black base,
+# maroon accent border, warm off-white text.
+
+background-color=#0C0C0D
+text-color=#ffffff
+border-color=#ffffff
+border-size=2
+border-radius=8
+
+width=320
+height=110
+padding=10
+margin=10
+
+font=JetBrainsMono Nerd Font 11
+
+default-timeout=5000
+ignore-timeout=false
+
+# Urgency-based accents — low/normal use the base border, critical
+# switches to the blossom-pink so it actually stands out.
+[urgency=low]
+border-color=#242424
+
+[urgency=normal]
+border-color=#242424
+
+[urgency=critical]
+border-color=#242424
+default-timeout=0
