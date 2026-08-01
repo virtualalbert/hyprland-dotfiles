@@ -1,11 +1,11 @@
 # Actual Minimal Hyprland Setup
-##Clean and Monochrome
+#Clean and Monochrome
 
 Well I have seen them I know you also the shit at unixporn how in the world are they minimalist .. 
 
 whatever here is my dotfiles i created from raw hyprland so no bloat :)
 
-###Apps I use 
+#Apps I use 
 
 It is as per your convienience but for me well I wanted clean and minimal so i got these.
 
