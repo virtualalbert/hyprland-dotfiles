@@ -1,0 +1,184 @@
+
+# MONITOR SETUP
+
+# Syntax: monitor = <name>, <resolution>@<refresh>, <position>, <scale>
+
+monitor = , preferred, auto, 1
+
+# ENVIRONMENT VARIABLES
+
+env = XCURSOR_SIZE,24
+env = QT_QPA_PLATFORMTHEME,qt6ct
+env = QT_QPA_PLATFORM,wayland
+env = QT_QPA_PLATFORMTHEME,qt5ct
+env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
+env = QT_AUTO_SCREEN_SCALE_FACTOR,1
+env = QT_STYLE_OVERRIDE,kvantum 
+  
+
+# INPUT CONFIG
+
+input {
+    kb_layout = us         
+    follow_mouse = 1        # 1 = focus follows mouse hover
+
+    touchpad {
+        natural_scroll = true   
+    }
+
+    sensitivity = 0          # mouse sensitivity, -1.0 to 1.0, 0 = default
+}
+
+
+
+# GENERAL LAYOUT SETTINGS
+
+general {
+    gaps_in = 4               
+    gaps_out = 1
+    border_size = 0          
+    col.active_border = 111111   
+    col.inactive_border = rgba(595959aa)  
+    layout = dwindle          
+}
+
+windowrule = border_size 0, rounding 0, match:class thunar
+
+# DECORATION 
+
+decoration {
+    rounding = 0              # corner radius on windows, in px
+
+    blur {
+        enabled = false
+#       size = 3
+#       passes = 1
+    }
+}
+
+# ANIMATIONS
+
+animations {
+    enabled = true
+
+
+    bezier = smoothOut, 0.36, 0, 0.66, -0.56
+    bezier = smoothIn, 0.25, 1, 0.5, 1
+    bezier = overshot, 0.05, 0.9, 0.1, 1.05
+
+    # windows: opening/closing/moving/resizing
+    animation = windows, 1, 4, overshot, popin 80%
+    animation = windowsOut, 1, 4, smoothOut, popin 80%
+    animation = windowsMove, 1, 3, smoothIn
+
+    # fade: used for things like layer transitions, dimming
+    animation = fade, 1, 4, smoothIn
+
+    # workspaces: the switch animation when you change workspace
+    animation = workspaces, 1, 3, smoothIn, slide
+
+    # border: color transition speed on focus change
+    animation = border, 1, 5, default
+}
+
+
+# KEYBINDS
+
+# $mod is a variable — SUPER is the Windows/Cmd key. Defining it once
+# means I can change your modifier key everywhere by editing one line.
+
+$mod = SUPER
+$terminal = kitty
+$fileManager = nautilus  
+$menu = cd .config && cd rofi && cd launchers && cd type-5 && ./launcher.sh # app launcher — install with: sudo dnf install wofi
+
+# Screenshot: select region, save to file + copy to clipboard
+
+bind = , Print, exec, grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%s').png
+
+$powermenu = cd .config/rofi/powermenu/type-1 && ./powermenu.sh
+
+# Screenshot: select region, copy to clipboard only (no file)
+
+bind = SHIFT, Print, exec, grim -g "$(slurp)" - | wl-copy
+
+# --- App launching ---
+
+bind = $mod, RETURN, exec, $terminal
+bind = $mod, E, exec, $fileManager
+#bind = $mod, D, exec, $menu
+bind = $mod, Q, killactive         # close focused window
+bind = $mod SHIFT, E, exit         # log out of Hyprland session
+bind = $mod, N, exec, $powermenu
+bind = $mod, R, exec, rofi -show drun -theme ~/.config/rofi/everything-is-a-file.rasi
+
+bind = $mod, V, togglefloating     
+bind = $mod, F, fullscreen         
+bind = $mod, P, pseudo             
+#bind = $mod, J, togglesplit        
+
+#bind = $mod, B, exec, 
+bind = $mod, M, exec, ~/.config/eww/toggle.sh
+bind = $mod, H, movefocus, l
+bind = $mod, L, movefocus, r
+bind = $mod, K, movefocus, u
+bind = $mod, J, movefocus, d
+
+# --- Workspaces ---
+# up to 10 numbered workspaces
+
+bind = $mod, 1, workspace, 1
+bind = $mod, 2, workspace, 2
+bind = $mod, 3, workspace, 3
+bind = $mod, 4, workspace, 4
+bind = $mod, 5, workspace, 5
+bind = $mod SHIFT, 0, workspace, 6
+
+# Move focused window
+
+bind = $mod SHIFT, 1, movetoworkspace, 1
+bind = $mod SHIFT, 2, movetoworkspace, 2
+bind = $mod SHIFT, 3, movetoworkspace, 3
+bind = $mod SHIFT, 4, movetoworkspace, 4
+bind = $mod SHIFT, 5, movetoworkspace, 5
+ 
+# --- Mouse-driven window management ---
+
+# bindm = well in my words any thing you click after bindm takes bind i mean mod firstit more like mod (25,65), mod right click :)
+
+bindm = $mod, mouse:272, movewindow     # left-click drag = move
+bindm = $mod, mouse:273, resizewindow   # right-click drag = resize
+
+#WOB
+
+bind = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ && wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}' > $WOBSOCK
+bind = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}' > $WOBSOCK
+bind = , XF86MonBrightnessUp, exec, brightnessctl set +10% && brightnessctl -m | awk -F, '{print $4}' | tr -d '%' > $WOBSOCK
+bind = , XF86MonBrightnessDown, exec, brightnessctl set 10%- && brightnessctl -m | awk -F, '{print $4}' | tr -d '%' > $WOBSOCK
+
+# AUTOSTART 
+
+exec-once = waybar
+exec-once = hyprpaper & sleep 1 && hyprctl hyprpaper wallpaper "eDP-1,~/Pictures/wallpaper.jpg"
+exec-once = hypridle
+exec-once = mkfifo -p $XDG_RUNTIME_DIR/wob.sock 2>/dev/null; tail -f $XDG_RUNTIME_DIR/wob.sock | wob
+env = WOBSOCK,$XDG_RUNTIME_DIR/wob.sock
+
+# WELL IN CASE YOU FORGOT YOUR MOUSE
+
+bind = $mod, A, submap, fastedit
+submap = fastedit
+bind = CTRL, right, resizeactive, 10 0
+bind = CTRL, left, resizeactive, -10 0
+bind = CTRL, up, resizeactive, 0 -10
+bind= CTRL, down, resizeactive, 0 10
+binde = , left, movefocus, l
+binde = , right, movefocus, r
+binde = , up, movefocus, u
+binde = , down, movefocus, d
+bind = SHIFT, left, movewindow, l
+bind = SHIFT, right, movewindow, r
+bind = SHIFT, up, movewindow, u
+bind = SHIFT, down, movewindow, d
+bind = , escape, submap, reset
+submap = reset

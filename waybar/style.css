@@ -1,0 +1,78 @@
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 12px;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: #000000;
+    color: #4a4a4a;
+    border-bottom: 1px solid rgba(74, 74, 74, 0.2);
+}
+
+#workspaces button {
+    background: transparent;
+    color: #4a4a4a;
+    padding: 0 8px;
+}
+#workspaces button.active {
+    color: #ffffff;
+}
+#workspaces button:hover {
+    color: #cccccc;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+#clock,
+#pulseaudio,
+#network,
+#battery,
+#tray {
+    color: #4a4a4a;
+    padding: 0 10px;
+}
+
+#battery.charging {
+    color: #cccccc;
+}
+
+#battery.warning:not(.charging) {
+    color: #ffffff;
+}
+
+tooltip {
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid #4a4a4a;
+}
+
+/* Add to your waybar style.css. Assumes your bar already uses a
+   monospace font and plain text like "vol 94%" / "wifi 40%" — this
+   just matches that: no background, no border, text only. */
+
+#custom-pomodoro {
+    color: #ffffff;
+    background: transparent;
+    padding: 0 8px;
+}
+
+#custom-pomodoro.idle {
+    color: #555555; /* dim when nothing is running, like an inactive stat */
+}
+
+#custom-pomodoro.paused {
+    color: #999999;
+}
+
+#custom-pomodoro.running {
+    color: #ffffff;
+}
+/* Add to your waybar style.css. Matches the existing bar: flat white
+   monospace text, no background, no border, no per-state coloring —
+   same treatment as your vol/wifi/battery modules. */
+
+#custom-pomodoro {
+    color: #ffffff;
+    background: transparent;
+    padding: 0 10px;
+}

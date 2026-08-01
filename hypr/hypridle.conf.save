@@ -1,0 +1,31 @@
+general {
+    # Command hypridle runs when the system resumes from being locked
+    # or suspended — usually nothing needed, but some setups use this
+    # to re-trigger a lock screen redraw. Left blank/default here.
+    lock_cmd = pidof hyprlock || hyprlock       # avoid launching a second hyprlock if one's already running
+    before_sleep_cmd = loginctl lock-session    # ensure screen locks before system sleeps
+    after_sleep_cmd = hyprctl dispatch dpms on  # turn monitor back on after waking
+}
+
+# --- Timeout 1: dim-ish warning before lock (optional, skip if annoying) ---
+# Not included by default — add later if you want a "screen about to lock"
+# grace period. Skipping for now to keep this simple.
+
+# --- Timeout 2: lock the screen ---
+listener {
+    timeout = 300                     # 300 seconds = 5 minutes idle
+    on-timeout = loginctl lock-session
+}
+
+# --- Timeout 3: turn off monitor (after lock, saves power) ---
+listener {
+    timeout = 330                     # 30 seconds after lock triggers
+    on-timeout = hyprctl dispatch dpms off
+    on-resume = hyprctl dispatch dpms on   # wake monitor on any input
+}
+
+# --- Timeout 4: suspend the system entirely ---
+listener {
+    timeout = 1800                    # 30 minutes idle — adjust to taste
+    on-timeout = systemctl suspend
+}
