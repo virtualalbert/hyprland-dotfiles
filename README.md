@@ -1,38 +1,45 @@
-# Actual Minimal Hyprland Setup
-**Clean and Monochrome**
+# My Hyprland Dotfiles
 
-Well I have seen them I know you also the shit at unixporn how in the world are they minimalist .. 
+A minimal Hyprland setup built on CachyOS.
 
-whatever here is my dotfiles i created from raw hyprland so no bloat :)
+---
 
-**Apps I use** 
+## Screenshot
 
-It is as per your convienience but for me well I wanted clean and minimal so i got these.
+![Desktop](images/desktop.png)
 
--Hyprland
--Waybar
--Kitty
--Fish
--Mako
--Rofi
--Cmus
--Ly
+---
 
-*For Desktop GUI Apps*
+## Features
 
--Zen
--Brave-origin (For Chromium) --you can skip this
--Obsidian
--Libreoffice
--Spotify
--VLC I like it you can use MPV its also great
--Files - Nautilus I like it use thunar or something
+- Hyprland
+- Waybar
+- Kitty
+- Fish
+- Wofi
+- Mako
 
-Run `git status`.
+---
+
+## Installation
 
 ```bash
-git status
-git add .
-git commit
+git clone git@github.com:virtualalbert/hyprland-dotfiles.git
 ```
-![Screenshot](Pictures/wallpaper.jpg)
+
+---
+
+## Structure
+
+```text
+hypr/
+waybar/
+kitty/
+fish/
+```
+
+---
+
+## Notes
+
+Still under development.
