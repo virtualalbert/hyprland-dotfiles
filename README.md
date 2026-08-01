@@ -37,3 +37,5 @@ fish/
 ## Notes
 
 Still under development.
+
+Well it's my first time using git so don't mind :)
