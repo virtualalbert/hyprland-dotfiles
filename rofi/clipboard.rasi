@@ -1,0 +1,66 @@
+configuration {
+    show-icons: false;
+    font: "JetBrainsMono Nerd Font 11";
+}
+
+* {
+    bg:       #000000;
+    bg-alt:   #0a0a0a;
+    fg:       #e0e0e0;
+    fg-dim:   #666666;
+    border:   #ffffff;
+}
+
+window {
+    background-color: @bg;
+    border: 1px;
+    border-color: @border;
+    padding: 0px;
+    width: 600px;
+}
+
+mainbox {
+    background-color: @bg;
+    padding: 12px;
+}
+
+inputbar {
+    background-color: @bg-alt;
+    text-color: @fg;
+    padding: 8px 12px;
+    border: 1px;
+    border-color: @fg-dim;
+}
+
+prompt {
+    text-color: @fg-dim;
+}
+
+entry {
+    text-color: @fg;
+    placeholder: "search clipboard...";
+    placeholder-color: @fg-dim;
+}
+
+listview {
+    background-color: @bg;
+    lines: 8;
+    spacing: 2px;
+    scrollbar: false;
+    margin: 8px 0px 0px 0px;
+}
+
+element {
+    padding: 6px 10px;
+    background-color: @bg;
+    text-color: @fg-dim;
+}
+
+element selected {
+    background-color: @fg;
+    text-color: @bg;
+}
+
+element-text {
+    vertical-align: 0.5;
+}
