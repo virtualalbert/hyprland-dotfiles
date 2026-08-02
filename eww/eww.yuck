@@ -1,0 +1,42 @@
+(defpoll music-title :interval "2s" "playerctl metadata title 2>/dev/null || echo 'nothing playing'")
+(defpoll music-artist :interval "2s" "playerctl metadata artist 2>/dev/null")
+(defpoll music-status :interval "1s" "playerctl status 2>/dev/null || echo 'Stopped'")
+
+(defpoll volume :interval "1s" "pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '[0-9]+(?=%)' | head -1")
+(defpoll brightness :interval "1s" "brightnessctl -m | cut -d, -f4 | tr -d '%'")
+
+(defpoll wifi-status :interval "1s" "nmcli radio wifi")
+(defpoll bt-status :interval "1s" "bluetoothctl show | grep -q 'Powered: yes' && echo on || echo off")
+
+(defwidget music []
+  (box :class "section" :orientation "v" :space-evenly false :spacing 12
+    (label :class "song" :text music-title :limit-width 30)
+    (label :class "artist" :text music-artist :limit-width 30)
+    (box :class "controls" :orientation "h" :space-evenly true :spacing 20
+      (button :class "ctrl-btn" :onclick "playerctl previous" "prev")
+      (button :class "ctrl-btn" :onclick "playerctl play-pause" {music-status == "Playing" ? "pause" : "play"})
+      (button :class "ctrl-btn" :onclick "playerctl next" "next"))))
+
+(defwidget settings []
+  (box :class "section" :orientation "v" :space-evenly false :spacing 14
+    (box :orientation "h" :space-evenly false :spacing 10
+      (label :class "label" :text "volume")
+      (scale :class "slider" :value volume :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%" :min 0 :max 100))
+    (box :orientation "h" :space-evenly false :spacing 10
+      (label :class "label" :text "brightness")
+      (scale :class "slider" :value brightness :onchange "brightnessctl set {}%" :min 0 :max 100))
+    (box :orientation "h" :space-evenly true :spacing 12
+      (button :class "toggle ${wifi-status == 'enabled' ? 'on' : 'off'}"
+              :onclick "nmcli radio wifi ${wifi-status == 'enabled' ? 'off' : 'on'}" "wifi")
+      (button :class "toggle ${bt-status == 'on' ? 'on' : 'off'}"
+              :onclick "bluetoothctl power ${bt-status == 'on' ? 'off' : 'on'}" "bluetooth"))))
+
+(defwindow control-center
+  :monitor 0
+  :geometry (geometry :width "340px" :height "0px" :anchor "center center")
+  :stacking "overlay"
+  :windowtype "dialog"
+  (box :class "control-center" :orientation "v" :space-evenly false :spacing 20
+    (music)
+    (box :class "divider")
+    (settings)))
