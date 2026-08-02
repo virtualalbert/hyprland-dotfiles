@@ -40,4 +40,5 @@ fish/
 Still under development.
 
 Well it's my first time using git so don't mind :)
+
 It's for user with good teminal experience I don't use gui apps so begginers should skip it, I made it for myself as a power user with keyboard driven workflow
